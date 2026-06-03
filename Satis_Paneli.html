@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuş Medya & Tasarım | Dijital Hediye Paketleri</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- GENEL AYARLAR --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        body { background-color: #0f172a; color: #f8fafc; line-height: 1.6; overflow-x: hidden; transition: background-color 0.3s, color 0.3s; }
+        a { text-decoration: none; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 40px; color: #f8fafc; font-weight: 700; transition: color 0.3s; }
+        .section-title span { color: #ff7eb3; }
+
+        /* --- ÜST DUYURU BARI --- */
+        .top-bar { background: linear-gradient(90deg, #ff0844 0%, #ffb199 100%); color: white; text-align: center; padding: 8px 10px; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.5px; z-index: 1001; position: relative;}
+        .top-bar i { margin-right: 5px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+        /* --- YENİ: SABİT ÜST MENÜ (NAVBAR) --- */
+        .main-header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 20px; background: rgba(15, 23, 42, 0.85); 
+            backdrop-filter: blur(12px); position: sticky; top: 0; 
+            z-index: 1000; border-bottom: 1px solid #334155; transition: 0.3s;
+        }
+        .brand-logo { font-size: 1.3rem; font-weight: 700; color: #f8fafc; letter-spacing: 0.5px; transition: 0.3s; }
+        .brand-logo span { color: #ff7eb3; }
+        .theme-toggle { 
+            background: transparent; border: none; color: #fbbf24; 
+            font-size: 1.4rem; cursor: pointer; transition: 0.3s; 
+            display: flex; align-items: center; justify-content: center;
+        }
+        .theme-toggle:hover { transform: scale(1.1); }
+
+        /* --- HERO BÖLÜMÜ --- */
+        .hero { text-align: center; padding: 50px 20px 40px; background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%); border-bottom: 1px solid #334155; transition: 0.3s; }
+        .hero h1 { font-size: 2.8rem; margin-bottom: 15px; color: #f8fafc; line-height: 1.2; transition: 0.3s;}
+        .hero h1 span { color: #ff7eb3; }
+        .hero p { font-size: 1.05rem; color: #94a3b8; max-width: 600px; margin: 0 auto 30px; transition: 0.3s;}
+
+        /* Güven Rozetleri */
+        .trust-badges { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 10px; }
+        .badge-item { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; color: #cbd5e1; font-weight: 500; transition: 0.3s; }
+        .badge-item i { color: #10b981; }
+
+        /* --- NASIL ÇALIŞIR? --- */
+        .how-it-works { padding: 60px 0; background: #1e293b; border-bottom: 1px solid #334155; transition: 0.3s; }
+        .steps-wrapper { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .step-card { background: #0f172a; padding: 30px 20px; border-radius: 15px; width: 100%; max-width: 300px; text-align: center; border: 1px solid #334155; position: relative; transition: 0.3s; }
+        .step-num { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: #ff7eb3; color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(255, 126, 179, 0.4); }
+        .step-card i { font-size: 2.5rem; color: #3b82f6; margin-bottom: 15px; margin-top: 10px; }
+        .step-card h3 { font-size: 1.2rem; margin-bottom: 10px; color: #f8fafc; transition: 0.3s;}
+        .step-card p { font-size: 0.9rem; color: #94a3b8; transition: 0.3s;}
+
+        /* --- PAKETLER --- */
+        .pricing-section { padding: 80px 0; }
+        .pricing-grid { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
+        
+        .price-card { background: #1e293b; border-radius: 20px; padding: 40px 30px; width: 100%; max-width: 400px; border: 1px solid #334155; display: flex; flex-direction: column; position: relative; transition: 0.3s; }
+        .price-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        .discount-tag { position: absolute; top: -15px; right: -10px; background: #ef4444; color: white; font-weight: 700; font-size: 0.85rem; padding: 5px 15px; border-radius: 20px; transform: rotate(10deg); box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4); }
+        .pkg-name { font-size: 1.4rem; font-weight: 600; margin-bottom: 5px; color: #cbd5e1; transition: 0.3s;}
+        .old-price { font-size: 1.3rem; color: #64748b; text-decoration: line-through; font-weight: 500; margin-bottom: -5px; }
+        .pkg-price { font-size: 3.2rem; font-weight: 700; margin-bottom: 25px; color: #fff; transition: 0.3s;}
+        .pkg-price span { font-size: 1rem; font-weight: 400; color: #94a3b8; transition: 0.3s;}
+        
+        .pkg-features { list-style: none; margin-bottom: 30px; flex-grow: 1; }
+        .pkg-features li { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 15px; font-size: 0.95rem; color: #e2e8f0; transition: 0.3s;}
+        .pkg-features li i { margin-top: 4px; color: #10b981; font-size: 1.1rem; }
+        
+        .premium { border: 2px solid #ff7eb3; background: linear-gradient(180deg, #1e293b 0%, #171e2e 100%); box-shadow: 0 10px 40px rgba(255, 126, 179, 0.15); transform: scale(1.02); }
+        .premium-badge { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); color: white; padding: 5px 20px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; white-space: nowrap; box-shadow: 0 4px 10px rgba(255,8,68,0.4); }
+
+        .btn-group { display: flex; flex-direction: column; gap: 10px; }
+        .btn { width: 100%; padding: 12px; border-radius: 12px; font-weight: 600; font-size: 0.95rem; cursor: pointer; text-align: center; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; border: none; }
+        .btn-outline { background: rgba(255,255,255,0.05); border: 1px solid #64748b; color: #f8fafc; transition: 0.3s;}
+        .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: #f8fafc; }
+        .btn-solid-1 { background: #25D366; color: white; }
+        .btn-solid-1:hover { background: #128C7E; }
+        .btn-solid-2 { background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
+        .btn-solid-2:hover { filter: brightness(1.1); box-shadow: 0 5px 15px rgba(220, 39, 67, 0.4); }
+
+        /* --- MÜŞTERİ YORUMLARI --- */
+        .reviews-section { padding: 60px 0; background: #1e293b; border-top: 1px solid #334155; transition: 0.3s;}
+        .reviews-wrapper { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 40px;}
+        .review-card { background: #0f172a; padding: 25px; border-radius: 15px; width: 100%; max-width: 320px; border: 1px solid #334155; transition: 0.3s;}
+        .stars { color: #fbbf24; margin-bottom: 10px; font-size: 1.1rem; }
+        .review-text { font-size: 0.95rem; color: #cbd5e1; font-style: italic; margin-bottom: 15px; line-height: 1.6; transition: 0.3s;}
+        .reviewer-name { font-weight: 600; color: #f8fafc; font-size: 0.9rem; transition: 0.3s;}
+        .reviewer-name span { color: #64748b; font-weight: 400; font-size: 0.8rem; display: block; }
+
+        /* Fake Yorum Formu */
+        .add-review-box { background: #0f172a; max-width: 600px; margin: 0 auto; padding: 30px; border-radius: 15px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: 0.3s;}
+        .add-review-box h3 { text-align: center; margin-bottom: 20px; color: #cbd5e1; font-size: 1.2rem; transition: 0.3s;}
+        .form-group { margin-bottom: 15px; }
+        .form-control { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid #334155; padding: 12px 15px; border-radius: 8px; color: white; font-size: 0.95rem; outline: none; transition: 0.3s; }
+        .form-control:focus { border-color: #3b82f6; background: rgba(255,255,255,0.1); }
+        .star-select { text-align: center; font-size: 1.5rem; margin-bottom: 15px; }
+        .star-select i { color: #fbbf24; cursor: pointer; transition: 0.2s; padding: 0 3px; }
+        .star-select i:hover { transform: scale(1.2); }
+        .submit-btn { width: 100%; background: #3b82f6; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: 0.3s; }
+        .submit-btn:hover { background: #2563eb; }
+        .success-msg { display: none; text-align: center; background: rgba(16, 185, 129, 0.1); border: 1px dashed #10b981; color: #10b981; padding: 20px; border-radius: 10px; font-weight: 600; }
+        .success-msg i { font-size: 2rem; margin-bottom: 10px; }
+
+        /* --- SIKÇA SORULAN SORULAR --- */
+        .faq-section { padding: 60px 0; border-top: 1px solid #334155; transition: 0.3s;}
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        details { background: #1e293b; border-radius: 10px; margin-bottom: 15px; border: 1px solid #334155; overflow: hidden; transition: 0.3s;}
+        summary { padding: 20px; font-weight: 600; color: #f8fafc; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; transition: 0.3s;}
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: '\f078'; font-family: "Font Awesome 6 Free"; font-weight: 900; color: #ff7eb3; transition: 0.3s; }
+        details[open] summary::after { transform: rotate(180deg); }
+        details p { padding: 0 20px 20px; color: #94a3b8; font-size: 0.95rem; line-height: 1.6; transition: 0.3s;}
+
+        /* --- FOOTER --- */
+        footer { margin-top: 20px; text-align: center; padding: 30px 20px; border-top: 1px solid #334155; transition: 0.3s;}
+        .brand-name { font-size: 1.2rem; font-weight: 700; color: #f8fafc; margin-bottom: 15px; letter-spacing: 1px; transition: 0.3s;}
+        .social-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; }
+        .social-btn { display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 50%; font-size: 1.3rem; color: white; transition: 0.3s; }
+        .wp-btn { background: #25D366; }
+        .wp-btn:hover { background: #128C7E; transform: translateY(-3px); }
+        .ig-btn { background: #E1306C; }
+        .ig-btn:hover { background: #C13584; transform: translateY(-3px); }
+        .copyright { color: #64748b; font-size: 0.85rem; }
+
+        /* =========================================
+           ☀️ LIGHT (GÜNDÜZ) MODU KODLARI
+           ========================================= */
+        body.light-mode { background-color: #f8fafc; color: #1e293b; }
+        body.light-mode .main-header { background: rgba(255, 255, 255, 0.9); border-bottom-color: #e2e8f0; }
+        body.light-mode .brand-logo { color: #0f172a; }
+        body.light-mode .theme-toggle { color: #3b82f6; }
+        
+        body.light-mode .hero { background: radial-gradient(circle at top, #f1f5f9 0%, #f8fafc 100%); border-bottom-color: #e2e8f0; }
+        body.light-mode .section-title, body.light-mode .hero h1 { color: #0f172a; }
+        body.light-mode .hero p, body.light-mode .step-card p, body.light-mode .pkg-price span { color: #475569; }
+        body.light-mode .badge-item { background: #f1f5f9; border-color: #e2e8f0; color: #334155; }
+        
+        body.light-mode .how-it-works, body.light-mode .reviews-section, body.light-mode .faq-section { background: #f8fafc; border-color: #e2e8f0; }
+        
+        body.light-mode .step-card, body.light-mode .price-card, body.light-mode .review-card, body.light-mode details, body.light-mode .add-review-box { 
+            background: #ffffff; border-color: #e2e8f0; box-shadow: 0 5px 20px rgba(0,0,0,0.03); 
+        }
+        body.light-mode .premium { background: linear-gradient(180deg, #ffffff 0%, #fff0f6 100%); border-color: #ff7eb3; }
+        
+        body.light-mode .step-card h3, body.light-mode .pkg-name, body.light-mode .pkg-price, body.light-mode .reviewer-name, body.light-mode summary, body.light-mode .brand-name, body.light-mode .add-review-box h3 { color: #0f172a; }
+        body.light-mode .pkg-features li, body.light-mode .review-text, body.light-mode details p { color: #334155; }
+        
+        body.light-mode .btn-outline { border-color: #cbd5e1; color: #334155; }
+        body.light-mode .btn-outline:hover { background: #f1f5f9; border-color: #94a3b8; }
+        body.light-mode .form-control { background: #f8fafc; border-color: #cbd5e1; color: #0f172a; }
+        body.light-mode footer { border-color: #e2e8f0; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .premium { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Üst Bar Kampanya -->
+    <div class="top-bar">
+        <i class="fa-solid fa-gift"></i> Sınırlı Süreli Kampanya! Tüm Paketlerde Fiyatlar Düştü!
+    </div>
+
+    <!-- YENİ: SABİT ÜST MENÜ & MARKA LOGOSU -->
+    <header class="main-header">
+        <div class="brand-logo">Kuş Medya <span>& Tasarım</span></div>
+        <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" title="Temayı Değiştir">
+            <i class="fa-solid fa-sun"></i>
+        </button>
+    </header>
+
+    <!-- Üst Başlık & Rozetler -->
+    <div class="hero">
+        <h1>Sevgilinize Unutulmaz Bir <br><span>Dijital Hediye</span> Verin</h1>
+        <p>Sadece size özel tasarlanmış, şifreli ve ömür boyu açık kalacak web sitenizi kampanya bitmeden alın.</p>
+        
+        <div class="trust-badges">
+            <div class="badge-item"><i class="fa-solid fa-bolt"></i> 3 Saatte Teslim</div>
+            <div class="badge-item"><i class="fa-solid fa-infinity"></i> Ömür Boyu Kapanmaz</div>
+            <div class="badge-item"><i class="fa-solid fa-mobile-screen"></i> %100 Mobil Uyumlu</div>
+        </div>
+    </div>
+
+    <!-- Nasıl Çalışır? -->
+    <div class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Süreç <span>Nasıl İşliyor?</span></h2>
+            <div class="steps-wrapper">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <i class="fa-solid fa-box-open"></i>
+                    <h3>Paketini Seç</h3>
+                    <p>Aşağıdaki seçeneklerden sana ve bütçene en uygun olan indirimli hediye paketini belirle.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <i class="fa-regular fa-images"></i>
+                    <h3>Anılarını Gönder</h3>
+                    <p>Satın alımdan sonra, belirlediğin pakete uygun fotoğraf, video ve mesajlarını bize ilet.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <h3>Sürprizin Hazır!</h3>
+                    <p>En geç 3 saat içinde siteni hazırlayalım, şifreli özel linkini sana gönderelim.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Paketler -->
+    <div class="pricing-section">
+        <div class="container">
+            <h2 class="section-title">Kampanyalı <span>Paketlerimiz</span></h2>
+            <div class="pricing-grid">
+                
+                <!-- 1. STANDART PAKET -->
+                <div class="price-card">
+                    <div class="discount-tag">%45 İNDİRİM</div>
+                    <div class="pkg-name">Standart Paket</div>
+                    <div class="old-price">450₺</div>
+                    <div class="pkg-price">250₺ <span>/ Tek Sefer</span></div>
+                    
+                    <ul class="pkg-features">
+                        <li><i class="fa-solid fa-check"></i> <b>Kişiye Özel Şifreli Giriş</b> (Siteniz yabancılara kapalıdır)</li>
+                        <li><i class="fa-solid fa-check"></i> <b>Canlı Aşk Sayacı</b> (Gün, saat, dakika sayımı)</li>
+                        <li><i class="fa-solid fa-check"></i> <b>Bizim Şarkımız</b> (Seçtiğiniz şarkı arka planda çalar)</li>
+                        <li><i class="fa-solid fa-check"></i> <b>Anı Galerisi</b> (En güzel 4 fotoğrafınız)</li>
+                        <li><i class="fa-solid fa-check"></i> <b>Aşk Mektubu</b> (Sizin yazdığınız özel mesaj)</li>
+                        <li><i class="fa-solid fa-check"></i> Ömür Boyu Ücretsiz Link</li>
+                    </ul>
+                    
+                    <div class="btn-group">
+                        <a href="STANDART_DEMO_LINKIN_BURAYA_GELECEK" target="_blank" class="btn btn-outline"><i class="fa-regular fa-eye"></i> Tasarıma Göz At</a>
+                        <a href="https://api.whatsapp.com/send?phone=905458627514&text=Merhaba,%20İndirimli%20Standart%20Paket%20(250TL)%20satın%20almak%20istiyorum." target="_blank" class="btn btn-solid-1"><i class="fa-brands fa-whatsapp"></i> Sipariş Ver (WhatsApp)</a>
+                        <a href="https://instagram.com/bugraint" target="_blank" class="btn btn-solid-2"><i class="fa-brands fa-instagram"></i> İletişime Geç (Instagram)</a>
+                    </div>
+                </div>
+
+                <!-- 2. VIP PREMIUM PAKET -->
+                <div class="price-card premium">
+                    <div class="premium-badge">💎 EN ÇOK TERCİH EDİLEN</div>
+                    <div class="discount-tag" style="background:#3b82f6;">DEV İNDİRİM</div>
+                    <div class="pkg-name">VIP Premium Paket</div>
+                    <div class="old-price">750₺</div>
+                    <div class="pkg-price">400₺ <span>/ Tek Sefer</span></div>
+                    
+                    <ul class="pkg-features">
+                        <li><i class="fa-solid fa-check"></i> <b>Hareketli Cam Tasarım</b> (Özel efektli lüks görünüm)</li>
+                        <li><i class="fa-solid fa-check"></i> <b>Sana Özel Videomuz</b> (Kendi videonuzu ekletin)</li>
+                        <li><i class="fa-solid fa-check"></i> <b>Aşk Zaman Çizelgesi</b> (Tarihli 5 fotoğraf alanı)</li>
+                        <li><i class="fa-solid fa-check"></i> <b>Büyük Fotoğraf Galerisi</b> (6'lı özel ızgara albüm)</li>
+                        <li><i class="fa-solid fa-check"></i> <b>Hissiyat Zarfları</b> (Duyguya göre 4 farklı gizli not)</li>
+                        <li><i class="fa-solid fa-check"></i> <b>Konfetili Büyük Sürpriz</b> (Patlayan hediye kutusu)</li>
+                        <li><i class="fa-solid fa-check"></i> <b>Arka Planda Kalp Yağışı Efekti</b></li>
+                        <li><i class="fa-solid fa-check"></i> Ömür Boyu Ücretsiz Link</li>
+                    </ul>
+                    
+                    <div class="btn-group">
+                        <a href="VIP_DEMO_LINKIN_BURAYA_GELECEK" target="_blank" class="btn btn-outline"><i class="fa-regular fa-eye"></i> Tasarıma Göz At</a>
+                        <a href="https://api.whatsapp.com/send?phone=905458627514&text=Merhaba,%20Dev%20İndirimli%20VIP%20Premium%20Paket%20(400TL)%20satın%20almak%20istiyorum." target="_blank" class="btn btn-solid-1"><i class="fa-brands fa-whatsapp"></i> Sipariş Ver (WhatsApp)</a>
+                        <a href="https://instagram.com/bugraint" target="_blank" class="btn btn-solid-2"><i class="fa-brands fa-instagram"></i> İletişime Geç (Instagram)</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Müşteri Yorumları & Formu -->
+    <div class="reviews-section">
+        <div class="container">
+            <h2 class="section-title">Mutlu <span>Çiftlerimiz</span></h2>
+            
+            <div class="reviews-wrapper">
+                <div class="review-card">
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"VIP paketi aldım. ilk basta dolandırıcı sanmıstım ama harbi 2 saate geldi link. kız arkadasım videoyu görünce agladı resmen. eyvallah buğra ustam."</p>
+                    <div class="reviewer-name">Ahmet Y. <span>VIP Paket Alıcısı</span></div>
+                </div>
+                <div class="review-card">
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+                    <p class="review-text">"standart paket aldim. telefonda falan cok güzel duruyor ama keske benim pakettede o patlayan konfetiler olsaymis 😅 genede guzel elinize saglık."</p>
+                    <div class="reviewer-name">Merve K. <span>Standart Paket Alıcısı</span></div>
+                </div>
+                <div class="review-card">
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"Zarf olayı cok mantıklı olmus. sevgilim surekli o notları okuyo simdi. fiyatida piyasaya gore cok iyi bence, tavsiye ederim."</p>
+                    <div class="reviewer-name">Caner T. <span>VIP Paket Alıcısı</span></div>
+                </div>
+            </div>
+
+            <!-- Tıklanabilir Yıldızlı Yorum Yapma Alanı -->
+            <div class="add-review-box" id="reviewBox">
+                <h3>Siz De Deneyiminizi Paylaşın</h3>
+                <div class="form-group">
+                    <input type="text" id="revName" class="form-control" placeholder="Adınız Soyadınız (Örn: Ali Y.)" required>
+                </div>
+                <div class="form-group star-select" id="starSelector">
+                    <i class="fa-solid fa-star" data-val="1"></i>
+                    <i class="fa-solid fa-star" data-val="2"></i>
+                    <i class="fa-solid fa-star" data-val="3"></i>
+                    <i class="fa-solid fa-star" data-val="4"></i>
+                    <i class="fa-solid fa-star" data-val="5"></i>
+                </div>
+                <div class="form-group">
+                    <textarea id="revText" class="form-control" rows="3" placeholder="Hizmetimiz hakkındaki düşünceleriniz..." required></textarea>
+                </div>
+                <button onclick="sendReview()" class="submit-btn">Yorumu Gönder</button>
+            </div>
+            
+            <div id="reviewSuccess" class="success-msg">
+                <i class="fa-solid fa-circle-check"></i><br>
+                Yorumunuz başarıyla alındı!<br>
+                <span style="font-size:0.9rem; font-weight:400;">Ekibimiz tarafından incelendikten sonra kısa süre içinde sitemizde yayınlanacaktır. Değerli geri bildiriminiz için teşekkür ederiz.</span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SIKÇA SORULAN SORULAR -->
+    <div class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Sıkça Sorulan <span>Sorular</span></h2>
+            <div class="faq-container">
+                <details>
+                    <summary>Sitemizin süresi dolacak mı, kapanır mı?</summary>
+                    <p>Hayır, siteniz tamamen ücretsiz ve güvenilir bulut sunucularında barındırılır. Aylık veya yıllık hiçbir yenileme ücreti yoktur, ömür boyu sizin için yayında kalır.</p>
+                </details>
+                <details>
+                    <summary>Ödemeyi nasıl ve ne zaman yapıyorum?</summary>
+                    <p>Ödemenizi Havale/EFT, Papara veya İtemSatış üzerinden güvenle yapabilirsiniz. İşlem teyit edildikten hemen sonra sitenizin kodlanma süreci başlar.</p>
+                </details>
+                <details>
+                    <summary>Fotoğraf ve videoları nasıl göndereceğim?</summary>
+                    <p>Siparişi verdikten sonra iletişim kanallarımız (WhatsApp veya Instagram) üzerinden size bir liste atıyoruz. Oradan bize medyalarınızı tek seferde ve kalite düşmeden iletebiliyorsunuz.</p>
+                </details>
+                <details>
+                    <summary>Sitemizi başkaları veya Google bulabilir mi?</summary>
+                    <p>Kesinlikle hayır. Siteniz sadece size özel bir link ve sizin belirlediğiniz bir şifre ile açılır. Şifreyi bilmeyen hiç kimse anılarınıza ulaşamaz ve arama motorlarında çıkmaz.</p>
+                </details>
+                <details>
+                    <summary>Sonradan fotoğraf veya şarkı değiştirebilir miyiz?</summary>
+                    <p>Teslimattan sonraki ilk 24 saat içinde ufak yazı/tarih hatalarını ücretsiz düzeltiyoruz. Daha sonraki zamanlarda yapılacak fotoğraf veya şarkı değişimlerinde ise ufak bir işlem ücreti karşılığında destek sağlıyoruz.</p>
+                </details>
+                <details>
+                    <summary>Siteye girmek için uygulama indirmek şart mı?</summary>
+                    <p>Hayır, hiçbir uygulama kurmanıza gerek yoktur. Size ileteceğimiz linke tıklayarak telefondan, tabletten veya bilgisayardan (Chrome, Safari vb.) anında erişebilirsiniz.</p>
+                </details>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER VE İLETİŞİM -->
+    <footer>
+        <div class="brand-name">Kuş Medya & Tasarım</div>
+        <div class="social-links">
+            <a href="https://api.whatsapp.com/send?phone=905458627514" target="_blank" class="social-btn wp-btn" title="WhatsApp'tan Ulaşın"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://instagram.com/bugraint" target="_blank" class="social-btn ig-btn" title="Instagram'dan Ulaşın"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+        <div class="copyright">
+            © 2026. Kuş Medya & Tasarım. Tüm hakları saklıdır.<br>
+            İzinsiz kopyalanması ve satılması yasaktır.
+        </div>
+    </footer>
+
+    <script>
+        // GECE/GÜNDÜZ MODU SİSTEMİ
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const themeBtn = document.getElementById('themeBtn');
+            
+            if (document.body.classList.contains('light-mode')) {
+                themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+                themeBtn.style.color = '#3b82f6';
+            } else {
+                themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+                themeBtn.style.color = '#fbbf24';
+            }
+        }
+
+        // FAKE YORUM YILDIZ SİSTEMİ
+        let selectedRating = 5; 
+        const stars = document.querySelectorAll('#starSelector i');
+        
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                selectedRating = this.getAttribute('data-val'); 
+                stars.forEach(s => {
+                    if (s.getAttribute('data-val') <= selectedRating) {
+                        s.classList.remove('fa-regular');
+                        s.classList.add('fa-solid'); 
+                    } else {
+                        s.classList.remove('fa-solid');
+                        s.classList.add('fa-regular'); 
+                    }
+                });
+            });
+        });
+
+        // FAKE YORUM GÖNDERME
+        function sendReview() {
+            var name = document.getElementById('revName').value;
+            var text = document.getElementById('revText').value;
+            
+            if(name.trim() === "" || text.trim() === "") {
+                alert("Lütfen adınızı ve yorumunuzu eksiksiz girin.");
+                return;
+            }
+            
+            document.getElementById('reviewBox').style.display = 'none';
+            document.getElementById('reviewSuccess').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
